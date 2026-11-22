@@ -27,7 +27,7 @@ export function ServiceSwitcher() {
     <div
       role="tablist"
       aria-label="SnappFlow services"
-      className="grid grid-cols-3 gap-2 rounded-2xl border border-slate-800 bg-slate-900/70 p-1.5"
+      className="grid grid-cols-3 gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none"
     >
       {SERVICES.map(({ id, icon: Icon }) => {
         const isActive = activeService === id;
@@ -43,25 +43,27 @@ export function ServiceSwitcher() {
             data-testid={`service-tab-${id}`}
             onClick={() => setActiveService(id)}
             className={`relative flex flex-col items-center gap-1 rounded-xl px-3 py-2.5 text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 sm:flex-row sm:justify-center sm:gap-2.5 sm:text-start ${
-              isActive ? "text-white" : "text-slate-400 hover:text-slate-200"
+              isActive
+                ? "text-slate-950 dark:text-white"
+                : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             } ${isLocked ? "cursor-not-allowed opacity-60" : ""}`}
           >
             {isActive && (
               <motion.div
                 layoutId="activeServicePill"
                 transition={{ type: "spring", stiffness: 420, damping: 32 }}
-                className="absolute inset-0 rounded-xl bg-brand-500/20 ring-1 ring-brand-500/60"
+                className="absolute inset-0 rounded-xl bg-brand-500/15 ring-1 ring-brand-500/60 dark:bg-brand-500/20"
               />
             )}
             <Icon
               className={`relative z-10 h-5 w-5 shrink-0 ${
-                isActive ? "text-brand-400" : "text-slate-400"
+                isActive ? "text-brand-600 dark:text-brand-400" : "text-slate-400"
               }`}
               aria-hidden="true"
             />
             <div className="relative z-10">
               <div className="text-xs font-bold sm:text-sm">{copy.title}</div>
-              <div className="hidden text-[11px] text-slate-400 md:block">
+              <div className="hidden text-[11px] text-slate-500 dark:text-slate-400 md:block">
                 {copy.subtitle}
               </div>
             </div>

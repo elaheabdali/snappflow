@@ -40,7 +40,7 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className={`${jakarta.variable} ${vazirmatn.variable}`}
+      className={`dark ${jakarta.variable} ${vazirmatn.variable}`}
       suppressHydrationWarning
     >
       <body className="font-sans antialiased selection:bg-brand-500/30 selection:text-white">

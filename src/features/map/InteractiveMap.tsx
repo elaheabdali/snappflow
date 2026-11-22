@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Navigation } from "lucide-react";
 import { useLocale } from "@/hooks/useLocale";
+import { useTheme } from "@/hooks/useTheme";
 import { CITY_EDGES, CITY_NODES } from "@/lib/routing";
 import { useSnappFlowStore } from "@/store/useSnappFlowStore";
 import type { RouteResult } from "@/types";
@@ -13,6 +14,7 @@ interface InteractiveMapProps {
 
 export function InteractiveMap({ route }: InteractiveMapProps) {
   const { locale, t } = useLocale();
+  const { isDark } = useTheme();
   const originNodeId = useSnappFlowStore((s) => s.originNodeId);
   const destinationNodeId = useSnappFlowStore((s) => s.destinationNodeId);
   const setOriginNodeId = useSnappFlowStore((s) => s.setOriginNodeId);
@@ -40,22 +42,22 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
   return (
     <section
       aria-label={t.map.title}
-      className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/75 p-4 shadow-xl sm:p-5"
+      className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/75 dark:shadow-xl sm:p-5"
     >
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h2 className="flex items-center gap-2 text-sm font-bold text-white sm:text-base">
-            <Navigation className="h-4 w-4 text-brand-400" aria-hidden="true" />
+          <h2 className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white sm:text-base">
+            <Navigation className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />
             <span>{t.map.title}</span>
           </h2>
-          <p className="text-xs text-slate-400">{t.map.subtitle}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{t.map.subtitle}</p>
         </div>
-        <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-semibold text-sky-300">
+        <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-semibold text-sky-700 dark:text-sky-300">
           {t.map.graphAlgoBadge}
         </span>
       </div>
 
-      <div className="relative overflow-hidden rounded-2xl border border-slate-800/90 bg-slate-950">
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-800/90 dark:bg-slate-950">
         <svg
           viewBox="0 0 800 500"
           className="h-auto w-full select-none"
@@ -67,7 +69,7 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
               <path
                 d="M 40 0 L 0 0 0 40"
                 fill="none"
-                stroke="rgba(148, 163, 184, 0.07)"
+                stroke={isDark ? "rgba(148, 163, 184, 0.07)" : "rgba(100, 116, 139, 0.14)"}
                 strokeWidth="1"
               />
             </pattern>
@@ -79,7 +81,6 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
 
           <rect width="800" height="500" fill="url(#cityGrid)" />
 
-          {/* Road network edges */}
           {CITY_EDGES.map((edge) => {
             const from = nodeMap.get(edge.from);
             const to = nodeMap.get(edge.to);
@@ -91,14 +92,13 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke="rgba(100, 116, 139, 0.3)"
+                stroke={isDark ? "rgba(100, 116, 139, 0.3)" : "rgba(100, 116, 139, 0.4)"}
                 strokeWidth="3"
                 strokeLinecap="round"
               />
             );
           })}
 
-          {/* Animated optimal Dijkstra route */}
           {routePathD && (
             <motion.path
               key={routePathD}
@@ -116,7 +116,6 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
             />
           )}
 
-          {/* City Nodes */}
           {CITY_NODES.map((node) => {
             const isOrigin = node.id === originNodeId;
             const isDest = node.id === destinationNodeId;
@@ -159,8 +158,8 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
                   cx={node.x}
                   cy={node.y}
                   r={isOrigin || isDest ? 9 : 6.5}
-                  fill={isOrigin ? "#00d170" : isDest ? "#38bdf8" : "#1e293b"}
-                  stroke={isOrigin || isDest ? "#ffffff" : "#64748b"}
+                  fill={isOrigin ? "#00d170" : isDest ? "#38bdf8" : isDark ? "#1e293b" : "#ffffff"}
+                  stroke={isOrigin || isDest ? (isDark ? "#ffffff" : "#0f172a") : "#64748b"}
                   strokeWidth="2.5"
                 />
 
@@ -170,13 +169,15 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
                   width="92"
                   height="22"
                   rx="6"
-                  fill="rgba(15, 23, 42, 0.88)"
+                  fill={isDark ? "rgba(15, 23, 42, 0.88)" : "rgba(255, 255, 255, 0.94)"}
                   stroke={
                     isOrigin
-                      ? "rgba(0, 209, 112, 0.6)"
+                      ? "rgba(0, 209, 112, 0.7)"
                       : isDest
-                      ? "rgba(56, 189, 248, 0.6)"
-                      : "rgba(51, 65, 85, 0.7)"
+                      ? "rgba(56, 189, 248, 0.7)"
+                      : isDark
+                      ? "rgba(51, 65, 85, 0.7)"
+                      : "rgba(203, 213, 225, 0.9)"
                   }
                   strokeWidth="1"
                 />
@@ -184,7 +185,7 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
                   x={node.x}
                   y={node.y + 28.5}
                   textAnchor="middle"
-                  fill="#f8fafc"
+                  fill={isDark ? "#f8fafc" : "#0f172a"}
                   fontSize="11"
                   fontWeight={isOrigin || isDest ? "700" : "500"}
                 >
@@ -194,7 +195,6 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
             );
           })}
 
-          {/* Real-time WebSocket Driver Telemetry Marker */}
           {driverPosition && tripStatus === "in_progress" && (
             <motion.g
               animate={{ x: driverPosition.x, y: driverPosition.y }}
@@ -207,7 +207,7 @@ export function InteractiveMap({ route }: InteractiveMapProps) {
         </svg>
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
         <span>{t.map.clickHint}</span>
         <div className="flex items-center gap-4">
           <span className="inline-flex items-center gap-1.5">

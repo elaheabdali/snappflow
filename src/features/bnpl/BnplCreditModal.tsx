@@ -82,10 +82,10 @@ export function BnplCreditModal() {
     >
       {referenceCode ? (
         <div className="space-y-4 py-4 text-center">
-          <CheckCircle2 className="mx-auto h-12 w-12 text-brand-400" aria-hidden="true" />
-          <h3 className="text-base font-bold text-white">{t.bnpl.successTitle}</h3>
-          <p className="text-xs text-slate-400">{t.bnpl.successDesc}</p>
-          <div className="inline-block rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 font-mono text-xs text-brand-400">
+          <CheckCircle2 className="mx-auto h-12 w-12 text-brand-600 dark:text-brand-400" aria-hidden="true" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">{t.bnpl.successTitle}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{t.bnpl.successDesc}</p>
+          <div className="inline-block rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 font-mono text-xs text-brand-700 dark:border-slate-800 dark:bg-slate-950 dark:text-brand-400">
             {referenceCode}
           </div>
           <div>
@@ -104,8 +104,8 @@ export function BnplCreditModal() {
             <span
               className={`flex-1 rounded-lg px-3 py-1.5 text-center ${
                 step === 1
-                  ? "bg-brand-500/20 text-brand-400 ring-1 ring-brand-500/40"
-                  : "bg-slate-800 text-slate-400"
+                  ? "bg-brand-500/20 text-brand-700 ring-1 ring-brand-500/40 dark:text-brand-400"
+                  : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
               }`}
             >
               1. {t.bnpl.step1Title}
@@ -113,8 +113,8 @@ export function BnplCreditModal() {
             <span
               className={`flex-1 rounded-lg px-3 py-1.5 text-center ${
                 step === 2
-                  ? "bg-brand-500/20 text-brand-400 ring-1 ring-brand-500/40"
-                  : "bg-slate-800 text-slate-400"
+                  ? "bg-brand-500/20 text-brand-700 ring-1 ring-brand-500/40 dark:text-brand-400"
+                  : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
               }`}
             >
               2. {t.bnpl.step2Title}
@@ -124,7 +124,7 @@ export function BnplCreditModal() {
           {step === 1 ? (
             <div className="space-y-3">
               <div>
-                <label htmlFor="bnpl-name" className="mb-1 block text-xs text-slate-300">
+                <label htmlFor="bnpl-name" className="mb-1 block text-xs text-slate-600 dark:text-slate-300">
                   {t.bnpl.fullNameLabel}
                 </label>
                 <input
@@ -132,17 +132,17 @@ export function BnplCreditModal() {
                   type="text"
                   placeholder={t.bnpl.fullNamePlaceholder}
                   {...register("fullName")}
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-brand-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 />
                 {errors.fullName && (
-                  <p role="alert" className="mt-1 text-xs text-rose-400">
+                  <p role="alert" className="mt-1 text-xs text-rose-500 dark:text-rose-400">
                     {errors.fullName.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="bnpl-nid" className="mb-1 block text-xs text-slate-300">
+                <label htmlFor="bnpl-nid" className="mb-1 block text-xs text-slate-600 dark:text-slate-300">
                   {t.bnpl.nationalIdLabel}
                 </label>
                 <input
@@ -151,17 +151,17 @@ export function BnplCreditModal() {
                   inputMode="numeric"
                   placeholder={t.bnpl.nationalIdPlaceholder}
                   {...register("nationalId")}
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-brand-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 />
                 {errors.nationalId && (
-                  <p role="alert" className="mt-1 text-xs text-rose-400">
+                  <p role="alert" className="mt-1 text-xs text-rose-500 dark:text-rose-400">
                     {errors.nationalId.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="bnpl-phone" className="mb-1 block text-xs text-slate-300">
+                <label htmlFor="bnpl-phone" className="mb-1 block text-xs text-slate-600 dark:text-slate-300">
                   {t.bnpl.phoneLabel}
                 </label>
                 <input
@@ -170,10 +170,10 @@ export function BnplCreditModal() {
                   inputMode="numeric"
                   placeholder={t.bnpl.phonePlaceholder}
                   {...register("phone")}
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-brand-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 />
                 {errors.phone && (
-                  <p role="alert" className="mt-1 text-xs text-rose-400">
+                  <p role="alert" className="mt-1 text-xs text-rose-500 dark:text-rose-400">
                     {errors.phone.message}
                   </p>
                 )}
@@ -190,30 +190,30 @@ export function BnplCreditModal() {
           ) : (
             <div className="space-y-3">
               <div>
-                <label htmlFor="bnpl-income" className="mb-1 block text-xs text-slate-300">
+                <label htmlFor="bnpl-income" className="mb-1 block text-xs text-slate-600 dark:text-slate-300">
                   {t.bnpl.incomeLabel}
                 </label>
                 <input
                   id="bnpl-income"
                   type="number"
                   {...register("monthlyIncome")}
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-brand-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 />
                 {errors.monthlyIncome && (
-                  <p role="alert" className="mt-1 text-xs text-rose-400">
+                  <p role="alert" className="mt-1 text-xs text-rose-500 dark:text-rose-400">
                     {errors.monthlyIncome.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="bnpl-limit" className="mb-1 block text-xs text-slate-300">
+                <label htmlFor="bnpl-limit" className="mb-1 block text-xs text-slate-600 dark:text-slate-300">
                   {t.bnpl.requestedLimitLabel}
                 </label>
                 <select
                   id="bnpl-limit"
                   {...register("requestedLimit")}
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:border-brand-500 focus:outline-none"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-brand-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 >
                   {[2_000_000, 5_000_000, 10_000_000, 20_000_000].map((val) => (
                     <option key={val} value={val}>
@@ -227,7 +227,7 @@ export function BnplCreditModal() {
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="flex-1 rounded-xl border border-slate-700 bg-slate-800 py-2.5 text-sm font-semibold text-white hover:bg-slate-700"
+                  className="flex-1 rounded-xl border border-slate-300 bg-slate-100 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
                 >
                   {t.bnpl.prevStep}
                 </button>

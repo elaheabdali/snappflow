@@ -7,11 +7,13 @@ import type {
   Point2D,
   ServiceTier,
   ServiceType,
+  ThemeMode,
   TripStatus,
 } from "@/types";
 
 interface SnappFlowState {
   locale: Locale;
+  theme: ThemeMode;
   activeService: ServiceType;
   originNodeId: string;
   destinationNodeId: string;
@@ -30,6 +32,8 @@ interface SnappFlowState {
 
   setLocale: (locale: Locale) => void;
   toggleLocale: () => void;
+  setTheme: (theme: ThemeMode) => void;
+  toggleTheme: () => void;
   setActiveService: (service: ServiceType) => void;
   setOriginNodeId: (id: string) => void;
   setDestinationNodeId: (id: string) => void;
@@ -52,6 +56,7 @@ interface SnappFlowState {
 
 export const useSnappFlowStore = create<SnappFlowState>((set) => ({
   locale: "fa",
+  theme: "dark",
   activeService: "ride",
   originNodeId: "vanak",
   destinationNodeId: "enghelab",
@@ -71,6 +76,9 @@ export const useSnappFlowStore = create<SnappFlowState>((set) => ({
   setLocale: (locale) => set({ locale }),
   toggleLocale: () =>
     set((state) => ({ locale: state.locale === "fa" ? "en" : "fa" })),
+  setTheme: (theme) => set({ theme }),
+  toggleTheme: () =>
+    set((state) => ({ theme: state.theme === "dark" ? "light" : "dark" })),
   setActiveService: (activeService) => set({ activeService }),
   setOriginNodeId: (originNodeId) =>
     set((state) => ({

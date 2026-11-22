@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { useLiveTripSocket } from "@/hooks/useLiveTripSocket";
 import { useLocale } from "@/hooks/useLocale";
+import { useTheme } from "@/hooks/useTheme";
 import { findOptimalRoute } from "@/lib/routing";
 import { useSnappFlowStore } from "@/store/useSnappFlowStore";
 import { TopNav } from "@/features/header/TopNav";
@@ -15,7 +16,7 @@ const InteractiveMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[420px] animate-pulse rounded-3xl border border-slate-800 bg-slate-900/60" />
+      <div className="h-[420px] animate-pulse rounded-3xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60" />
     ),
   }
 );
@@ -35,6 +36,7 @@ const EngineeringShowcase = dynamic(
 
 export function SnappFlowShell() {
   useLocale();
+  useTheme();
   useLiveTripSocket();
 
   const activeService = useSnappFlowStore((s) => s.activeService);
@@ -54,7 +56,7 @@ export function SnappFlowShell() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
       <TopNav />
 
       <main className="mx-auto max-w-7xl space-y-5 px-4 py-6 sm:px-6">

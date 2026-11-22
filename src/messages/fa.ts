@@ -12,6 +12,7 @@ export const faMessages = {
     bnplWallet: "اعتبار اسنپ‌پی",
     architectureBtn: "معماری و امنیت",
     langToggleAria: "تغییر زبان به انگلیسی",
+    themeToggleAria: "تغییر تم به حالت روشن یا تاریک",
   },
   services: {
     ride: {

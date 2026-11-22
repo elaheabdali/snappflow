@@ -1,5 +1,7 @@
 export type Locale = "fa" | "en";
 
+export type ThemeMode = "dark" | "light";
+
 export type ServiceType = "ride" | "bike" | "cargo";
 
 export type ServiceTier = "eco" | "plus" | "vip";
@@ -16,8 +18,8 @@ export interface MapNode {
   id: string;
   nameFa: string;
   nameEn: string;
-  x: number; // SVG coordinate 0..800
-  y: number; // SVG coordinate 0..500
+  x: number;
+  y: number;
   districtFa: string;
   districtEn: string;
 }
@@ -26,7 +28,7 @@ export interface MapEdge {
   from: string;
   to: string;
   distanceKm: number;
-  trafficFactor: number; // 1.0 = clear, 1.5 = moderate, 2.0 = heavy
+  trafficFactor: number;
 }
 
 export interface RouteResult {

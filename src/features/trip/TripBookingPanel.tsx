@@ -97,16 +97,15 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
   return (
     <aside
       aria-label={t.booking.bookNow}
-      className="flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-900/80 p-5 shadow-xl"
+      className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-xl"
     >
-      {/* Origin & Destination Selectors */}
       <div className="relative flex flex-col gap-3">
         <div>
           <label
             htmlFor="origin-select"
-            className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-slate-400"
+            className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400"
           >
-            <MapPin className="h-3.5 w-3.5 text-brand-400" aria-hidden="true" />
+            <MapPin className="h-3.5 w-3.5 text-brand-600 dark:text-brand-400" aria-hidden="true" />
             <span>{t.booking.originLabel}</span>
           </label>
           <select
@@ -114,7 +113,7 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
             value={originNodeId}
             disabled={isBookingActive}
             onChange={(e) => setOriginNodeId(e.target.value)}
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm font-medium text-white transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 disabled:opacity-60"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm font-medium text-slate-900 transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
           >
             {CITY_NODES.map((n) => (
               <option key={n.id} value={n.id}>
@@ -129,7 +128,7 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
           onClick={swapStations}
           disabled={isBookingActive}
           aria-label={t.booking.swapAria}
-          className="self-end rounded-lg border border-slate-700 bg-slate-800 p-1.5 text-slate-300 transition hover:border-brand-500/50 hover:text-white disabled:opacity-50"
+          className="self-end rounded-lg border border-slate-200 bg-slate-100 p-1.5 text-slate-600 transition hover:border-brand-500/50 hover:text-slate-950 disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:text-white"
         >
           <ArrowUpDown className="h-4 w-4" aria-hidden="true" />
         </button>
@@ -137,9 +136,9 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
         <div>
           <label
             htmlFor="dest-select"
-            className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-slate-400"
+            className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400"
           >
-            <MapPin className="h-3.5 w-3.5 text-sky-400" aria-hidden="true" />
+            <MapPin className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" aria-hidden="true" />
             <span>{t.booking.destLabel}</span>
           </label>
           <select
@@ -147,7 +146,7 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
             value={destinationNodeId}
             disabled={isBookingActive}
             onChange={(e) => setDestinationNodeId(e.target.value)}
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm font-medium text-white transition focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/30 disabled:opacity-60"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm font-medium text-slate-900 transition focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/30 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
           >
             {CITY_NODES.map((n) => (
               <option key={n.id} value={n.id}>
@@ -158,9 +157,8 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
         </div>
       </div>
 
-      {/* Tier Selector */}
       <div>
-        <div className="mb-2 text-xs font-medium text-slate-400">
+        <div className="mb-2 text-xs font-medium text-slate-500 dark:text-slate-400">
           {t.booking.tierLabel}
         </div>
         <div className="grid grid-cols-3 gap-2">
@@ -175,8 +173,8 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
                 onClick={() => setSelectedTier(tier)}
                 className={`relative rounded-xl border p-2.5 text-start transition ${
                   isSelected
-                    ? "border-brand-500/70 bg-brand-500/10 text-white"
-                    : "border-slate-800 bg-slate-950/60 text-slate-400 hover:border-slate-700"
+                    ? "border-brand-500/70 bg-brand-500/10 text-slate-950 dark:text-white"
+                    : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400 dark:hover:border-slate-700"
                 } disabled:opacity-60`}
               >
                 {isSelected && (
@@ -186,7 +184,7 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
                   />
                 )}
                 <div className="relative text-xs font-bold">{copy.name}</div>
-                <div className="relative mt-0.5 text-[10px] text-slate-400">
+                <div className="relative mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
                   {copy.desc}
                 </div>
               </button>
@@ -195,35 +193,34 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
         </div>
       </div>
 
-      {/* Route Metrics & Dynamic Pricing */}
       {route && (
-        <div className="grid grid-cols-3 gap-2 rounded-2xl border border-slate-800 bg-slate-950/80 p-3 text-center">
+        <div className="grid grid-cols-3 gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-800 dark:bg-slate-950/80">
           <div>
-            <div className="flex items-center justify-center gap-1 text-[11px] text-slate-400">
-              <Route className="h-3.5 w-3.5 text-brand-400" aria-hidden="true" />
+            <div className="flex items-center justify-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+              <Route className="h-3.5 w-3.5 text-brand-600 dark:text-brand-400" aria-hidden="true" />
               <span>{t.booking.distanceLabel}</span>
             </div>
-            <div className="mt-1 text-sm font-bold text-white">
+            <div className="mt-1 text-sm font-bold text-slate-900 dark:text-white">
               {formatNumber(route.totalDistanceKm, locale)} {t.booking.kmUnit}
             </div>
           </div>
 
           <div>
-            <div className="flex items-center justify-center gap-1 text-[11px] text-slate-400">
-              <Clock className="h-3.5 w-3.5 text-sky-400" aria-hidden="true" />
+            <div className="flex items-center justify-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+              <Clock className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400" aria-hidden="true" />
               <span>{t.booking.etaLabel}</span>
             </div>
-            <div className="mt-1 text-sm font-bold text-white">
+            <div className="mt-1 text-sm font-bold text-slate-900 dark:text-white">
               {formatNumber(route.estimatedMinutes, locale)} {t.booking.minUnit}
             </div>
           </div>
 
           <div>
-            <div className="flex items-center justify-center gap-1 text-[11px] text-slate-400">
-              <TrendingUp className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
+            <div className="flex items-center justify-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+              <TrendingUp className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" aria-hidden="true" />
               <span>{t.booking.surgeLabel}</span>
             </div>
-            <div className="mt-1 text-xs font-bold text-amber-300">
+            <div className="mt-1 text-xs font-bold text-amber-600 dark:text-amber-300">
               {multiplier > 1.1 ? t.booking.surgeHigh : t.booking.surgeNormal} (
               {formatNumber(multiplier, locale)}x)
             </div>
@@ -231,10 +228,9 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
         </div>
       )}
 
-      {/* BNPL Toggle */}
-      <label className="flex cursor-pointer items-center justify-between rounded-xl border border-slate-800 bg-slate-950/70 px-3.5 py-2.5 text-xs">
-        <span className="flex items-center gap-2 font-medium text-slate-200">
-          <CreditCard className="h-4 w-4 text-brand-400" aria-hidden="true" />
+      <label className="flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs dark:border-slate-800 dark:bg-slate-950/70">
+        <span className="flex items-center gap-2 font-medium text-slate-700 dark:text-slate-200">
+          <CreditCard className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />
           <span>{t.booking.payWithBnpl}</span>
         </span>
         <input
@@ -250,22 +246,21 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
         <button
           type="button"
           onClick={() => setBnplModalOpen(true)}
-          className="text-start text-xs font-semibold text-amber-400 underline underline-offset-4 hover:text-amber-300"
+          className="text-start text-xs font-semibold text-amber-600 underline underline-offset-4 hover:text-amber-500 dark:text-amber-400 dark:hover:text-amber-300"
         >
           {t.booking.insufficientBnpl}
         </button>
       )}
 
-      {/* Price + Action CTA */}
-      <div className="flex items-center justify-between rounded-2xl bg-slate-950 px-4 py-3">
-        <span className="text-xs font-medium text-slate-400">
+      <div className="flex items-center justify-between rounded-2xl bg-slate-100 px-4 py-3 dark:bg-slate-950">
+        <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
           {t.booking.totalPriceLabel}
         </span>
         <motion.span
           key={finalPriceToman}
           initial={{ opacity: 0.6, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-lg font-extrabold text-brand-400"
+          className="text-lg font-extrabold text-brand-600 dark:text-brand-400"
         >
           {formatCurrency(finalPriceToman, locale)}
         </motion.span>
@@ -290,28 +285,26 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="space-y-3 rounded-2xl border border-slate-800 bg-slate-950 p-4"
+            className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950"
             aria-live="polite"
           >
-            {/* Status header */}
             <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-white">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white">
                 {tripStatus === "completed" ? (
-                  <CheckCircle2 className="h-4 w-4 text-brand-400" aria-hidden="true" />
+                  <CheckCircle2 className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />
                 ) : (
-                  <Loader2 className="h-4 w-4 animate-spin text-brand-400" aria-hidden="true" />
+                  <Loader2 className="h-4 w-4 animate-spin text-brand-600 dark:text-brand-400" aria-hidden="true" />
                 )}
                 <span data-testid="trip-status-text">{t.status[tripStatus]}</span>
               </div>
               {tripStatus === "in_progress" && (
-                <span className="text-xs font-semibold text-sky-400">
+                <span className="text-xs font-semibold text-sky-600 dark:text-sky-400">
                   {Math.round(tripProgress * 100)}% • {formatNumber(etaSeconds, locale)}{" "}
                   {t.booking.secUnit}
                 </span>
               )}
             </div>
 
-            {/* 4-Step Progress Timeline */}
             <div className="grid grid-cols-4 gap-1.5">
               {timelineSteps.map((stepLabel, idx) => {
                 const done = idx <= activeStepIndex;
@@ -319,12 +312,12 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
                   <div key={stepLabel} className="space-y-1">
                     <div
                       className={`h-1.5 rounded-full transition-colors ${
-                        done ? "bg-brand-500" : "bg-slate-800"
+                        done ? "bg-brand-500" : "bg-slate-200 dark:bg-slate-800"
                       }`}
                     />
                     <div
                       className={`text-center text-[10px] font-medium ${
-                        done ? "text-brand-400" : "text-slate-500"
+                        done ? "text-brand-600 dark:text-brand-400" : "text-slate-400 dark:text-slate-500"
                       }`}
                     >
                       {stepLabel}
@@ -334,20 +327,19 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
               })}
             </div>
 
-            {/* Assigned Driver Card */}
             {activeDriver && (
-              <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/90 p-3 text-xs">
+              <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-3 text-xs dark:border-slate-800 dark:bg-slate-900/90">
                 <div>
-                  <div className="font-bold text-white">
+                  <div className="font-bold text-slate-900 dark:text-white">
                     {locale === "fa" ? activeDriver.nameFa : activeDriver.nameEn}
                   </div>
-                  <div className="mt-0.5 text-slate-400">
+                  <div className="mt-0.5 text-slate-500 dark:text-slate-400">
                     {locale === "fa" ? activeDriver.vehicleFa : activeDriver.vehicleEn} •{" "}
                     {activeDriver.plateNumber}
                   </div>
                 </div>
-                <div className="inline-flex items-center gap-1 rounded-lg bg-amber-500/15 px-2 py-1 font-bold text-amber-300">
-                  <Star className="h-3.5 w-3.5 fill-amber-300" aria-hidden="true" />
+                <div className="inline-flex items-center gap-1 rounded-lg bg-amber-500/15 px-2 py-1 font-bold text-amber-700 dark:text-amber-300">
+                  <Star className="h-3.5 w-3.5 fill-amber-500 dark:fill-amber-300" aria-hidden="true" />
                   <span>{formatNumber(activeDriver.rating, locale)}</span>
                 </div>
               </div>
@@ -356,7 +348,7 @@ export function TripBookingPanel({ route }: TripBookingPanelProps) {
             <button
               type="button"
               onClick={handleCancelTrip}
-              className="w-full rounded-xl border border-slate-700 bg-slate-900 py-2 text-xs font-semibold text-slate-200 transition hover:bg-slate-800"
+              className="w-full rounded-xl border border-slate-200 bg-white py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
             >
               {tripStatus === "completed" ? t.booking.newTrip : t.booking.cancelTrip}
             </button>

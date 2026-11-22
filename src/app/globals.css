@@ -5,6 +5,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  html.dark {
     background-color: #070b14;
     color: #f8fafc;
   }

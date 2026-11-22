@@ -21,10 +21,10 @@ export function EngineeringShowcase() {
         {t.architecture.items.map((item) => (
           <div
             key={item.title}
-            className="rounded-xl border border-slate-800 bg-slate-950/90 p-3.5"
+            className="rounded-xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-800 dark:bg-slate-950/90"
           >
-            <h3 className="text-xs font-bold text-brand-400">{item.title}</h3>
-            <p className="mt-1 text-xs leading-relaxed text-slate-300">
+            <h3 className="text-xs font-bold text-brand-600 dark:text-brand-400">{item.title}</h3>
+            <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
               {item.desc}
             </p>
           </div>

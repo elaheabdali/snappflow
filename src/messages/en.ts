@@ -12,6 +12,7 @@ export const enMessages = {
     bnplWallet: "SnappPay Credit",
     architectureBtn: "Architecture & Security",
     langToggleAria: "Switch language to Persian",
+    themeToggleAria: "Toggle light or dark theme",
   },
   services: {
     ride: {
