@@ -9,9 +9,13 @@ export function useTheme() {
   const toggleTheme = useSnappFlowStore((s) => s.toggleTheme);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("snappflow-theme");
-    if (stored === "light" || stored === "dark") {
-      setTheme(stored);
+    try {
+      const stored = window.localStorage.getItem("snappflow-theme");
+      if (stored === "light" || stored === "dark") {
+        setTheme(stored);
+      }
+    } catch {
+      // Ignore storage access errors
     }
   }, [setTheme]);
 
@@ -22,7 +26,11 @@ export function useTheme() {
     } else {
       root.classList.remove("dark");
     }
-    window.localStorage.setItem("snappflow-theme", theme);
+    try {
+      window.localStorage.setItem("snappflow-theme", theme);
+    } catch {
+      // Ignore storage write errors
+    }
   }, [theme]);
 
   return { theme, isDark: theme === "dark", toggleTheme, setTheme };

@@ -72,3 +72,12 @@ export interface SurgeQuote {
   activeDriversNearby: number;
   updatedAt: string;
 }
+
+export interface CompletedTripRecord {
+  id: string;
+  originId: string;
+  destinationId: string;
+  service: ServiceType;
+  priceToman: number;
+  completedAt: string;
+}

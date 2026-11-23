@@ -29,6 +29,22 @@ export const metadata: Metadata = {
     "Snapp",
     "Portfolio",
   ],
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "SnappFlow | Real-Time Bilingual Mobility Super-App",
+    description:
+      "Bilingual ride-hailing, express courier, and cargo super-app powered by Dijkstra graph routing, simulated WebSockets, and BNPL credit.",
+    type: "website",
+    locale: "fa_IR",
+    alternateLocale: ["en_US"],
+    siteName: "SnappFlow",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SnappFlow | Real-Time Bilingual Mobility Super-App",
+    description:
+      "Next.js App Router, Strict TypeScript, Dijkstra Graph Routing & Simulated WebSockets.",
+  },
 };
 
 export default function RootLayout({

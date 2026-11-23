@@ -14,15 +14,16 @@ export function useLocale() {
     const html = document.documentElement;
     html.lang = locale;
     html.dir = locale === "fa" ? "rtl" : "ltr";
+    if (locale === "fa") {
+      html.classList.add("font-fa");
+      html.classList.remove("font-en");
+    } else {
+      html.classList.add("font-en");
+      html.classList.remove("font-fa");
+    }
   }, [locale]);
 
   const t = locale === "fa" ? faMessages : enMessages;
 
-  return {
-    locale,
-    isRtl: locale === "fa",
-    t,
-    toggleLocale,
-    setLocale,
-  };
+  return { locale, isRtl: locale === "fa", t, toggleLocale, setLocale };
 }

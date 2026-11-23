@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import type {
+  CompletedTripRecord,
   DriverInfo,
   Locale,
   Point2D,
@@ -18,6 +19,9 @@ interface SnappFlowState {
   originNodeId: string;
   destinationNodeId: string;
   selectedTier: ServiceTier;
+  isRoundTrip: boolean;
+  promoCode: string;
+  discountPercent: number;
   tripStatus: TripStatus;
   activeDriver: DriverInfo | null;
   driverPosition: Point2D | null;
@@ -29,6 +33,7 @@ interface SnappFlowState {
   payWithBnpl: boolean;
   isBnplModalOpen: boolean;
   isArchModalOpen: boolean;
+  tripHistory: CompletedTripRecord[];
 
   setLocale: (locale: Locale) => void;
   toggleLocale: () => void;
@@ -39,8 +44,12 @@ interface SnappFlowState {
   setDestinationNodeId: (id: string) => void;
   swapStations: () => void;
   setSelectedTier: (tier: ServiceTier) => void;
+  setRoundTrip: (value: boolean) => void;
+  applyPromoCode: (code: string) => boolean;
+  clearPromoCode: () => void;
   setPayWithBnpl: (value: boolean) => void;
   setBnplCreditLimit: (limit: number) => void;
+  deductBnplCredit: (amount: number) => boolean;
   setBnplModalOpen: (open: boolean) => void;
   setArchModalOpen: (open: boolean) => void;
   setWsConnected: (connected: boolean, latencyMs?: number) => void;
@@ -51,16 +60,25 @@ interface SnappFlowState {
     progress?: number;
     etaSeconds?: number;
   }) => void;
+  addTripHistory: (record: CompletedTripRecord) => void;
   resetTrip: () => void;
 }
 
-export const useSnappFlowStore = create<SnappFlowState>((set) => ({
+const VALID_PROMOS: Record<string, number> = {
+  SNAPP20: 20,
+  TEHRAN30: 30,
+};
+
+export const useSnappFlowStore = create<SnappFlowState>((set, get) => ({
   locale: "fa",
   theme: "dark",
   activeService: "ride",
   originNodeId: "vanak",
   destinationNodeId: "enghelab",
   selectedTier: "eco",
+  isRoundTrip: false,
+  promoCode: "",
+  discountPercent: 0,
   tripStatus: "idle",
   activeDriver: null,
   driverPosition: null,
@@ -72,6 +90,7 @@ export const useSnappFlowStore = create<SnappFlowState>((set) => ({
   payWithBnpl: false,
   isBnplModalOpen: false,
   isArchModalOpen: false,
+  tripHistory: [],
 
   setLocale: (locale) => set({ locale }),
   toggleLocale: () =>
@@ -98,8 +117,23 @@ export const useSnappFlowStore = create<SnappFlowState>((set) => ({
       destinationNodeId: state.originNodeId,
     })),
   setSelectedTier: (selectedTier) => set({ selectedTier }),
+  setRoundTrip: (isRoundTrip) => set({ isRoundTrip }),
+  applyPromoCode: (rawCode) => {
+    const normalized = rawCode.trim().toUpperCase();
+    const discount = VALID_PROMOS[normalized];
+    if (!discount) return false;
+    set({ promoCode: normalized, discountPercent: discount });
+    return true;
+  },
+  clearPromoCode: () => set({ promoCode: "", discountPercent: 0 }),
   setPayWithBnpl: (payWithBnpl) => set({ payWithBnpl }),
   setBnplCreditLimit: (bnplCreditLimit) => set({ bnplCreditLimit }),
+  deductBnplCredit: (amount) => {
+    const current = get().bnplCreditLimit;
+    if (current < amount) return false;
+    set({ bnplCreditLimit: current - amount });
+    return true;
+  },
   setBnplModalOpen: (isBnplModalOpen) => set({ isBnplModalOpen }),
   setArchModalOpen: (isArchModalOpen) => set({ isArchModalOpen }),
   setWsConnected: (wsConnected, wsLatencyMs = 18) =>
@@ -111,6 +145,10 @@ export const useSnappFlowStore = create<SnappFlowState>((set) => ({
       driverPosition: payload.position !== undefined ? payload.position : state.driverPosition,
       tripProgress: payload.progress ?? state.tripProgress,
       etaSeconds: payload.etaSeconds ?? state.etaSeconds,
+    })),
+  addTripHistory: (record) =>
+    set((state) => ({
+      tripHistory: [record, ...state.tripHistory].slice(0, 5),
     })),
   resetTrip: () =>
     set({

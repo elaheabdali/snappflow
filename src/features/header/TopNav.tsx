@@ -44,7 +44,7 @@ export function TopNav() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">
+              <span className="text-lg font-extrabold text-slate-900 dark:text-white">
                 {t.nav.brand}
               </span>
               <span

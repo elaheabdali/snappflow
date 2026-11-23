@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "IRANSansX";
+  src: local("IRANSansX"), local("IRANSans"), url("/fonts/IRANSansX-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANSansX";
+  src: local("IRANSansX Bold"), local("IRANSans Bold"), url("/fonts/IRANSansX-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -12,6 +28,12 @@
   html.dark {
     background-color: #070b14;
     color: #f8fafc;
+  }
+
+  html[dir="rtl"] body {
+    font-family: "IRANSansX", var(--font-vazirmatn), system-ui, sans-serif;
+    font-feature-settings: "ss01";
+    letter-spacing: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {

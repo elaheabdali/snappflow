@@ -16,7 +16,7 @@ const InteractiveMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[420px] animate-pulse rounded-3xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60" />
+      <div className="aspect-[8/5] w-full animate-pulse rounded-3xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60" />
     ),
   }
 );
@@ -35,7 +35,7 @@ const EngineeringShowcase = dynamic(
 );
 
 export function SnappFlowShell() {
-  useLocale();
+  const { t } = useLocale();
   useTheme();
   useLiveTripSocket();
 
@@ -60,6 +60,9 @@ export function SnappFlowShell() {
       <TopNav />
 
       <main className="mx-auto max-w-7xl space-y-5 px-4 py-6 sm:px-6">
+        <h1 className="sr-only">
+          {t.nav.brand} — {t.nav.tagline}
+        </h1>
         <ServiceSwitcher />
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">

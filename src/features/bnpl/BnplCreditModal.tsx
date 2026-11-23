@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Modal } from "@/components/ui/Modal";
@@ -11,6 +11,18 @@ import { useLocale } from "@/hooks/useLocale";
 import { formatCurrency } from "@/lib/format";
 import { submitBnplApplication } from "@/lib/mock-api";
 import { useSnappFlowStore } from "@/store/useSnappFlowStore";
+
+function isValidIranianNationalId(input: string): boolean {
+  if (!/^\d{10}$/.test(input)) return false;
+  if (/^(\d)\1{9}$/.test(input)) return false;
+  const check = Number(input[9]);
+  let sum = 0;
+  for (let i = 0; i < 9; i += 1) {
+    sum += Number(input[i]) * (10 - i);
+  }
+  const remainder = sum % 11;
+  return remainder < 2 ? check === remainder : check === 11 - remainder;
+}
 
 export function BnplCreditModal() {
   const { locale, t } = useLocale();
@@ -22,9 +34,16 @@ export function BnplCreditModal() {
   const [referenceCode, setReferenceCode] = useState<string | null>(null);
 
   const schema = z.object({
-    fullName: z.string().min(3, t.bnpl.errors.fullNameMin),
-    nationalId: z.string().regex(/^\d{10}$/, t.bnpl.errors.nationalIdInvalid),
-    phone: z.string().regex(/^09\d{9}$/, t.bnpl.errors.phoneInvalid),
+    fullName: z
+      .string()
+      .trim()
+      .min(3, t.bnpl.errors.fullNameMin)
+      .refine((val) => !/[<>]/.test(val), t.bnpl.errors.fullNameMin),
+    nationalId: z
+      .string()
+      .trim()
+      .refine(isValidIranianNationalId, t.bnpl.errors.nationalIdInvalid),
+    phone: z.string().trim().regex(/^09\d{9}$/, t.bnpl.errors.phoneInvalid),
     monthlyIncome: z.coerce.number().min(5_000_000, t.bnpl.errors.incomeMin),
     requestedLimit: z.coerce.number().min(500_000).max(50_000_000),
   });
@@ -60,15 +79,21 @@ export function BnplCreditModal() {
     setOpen(false);
     setStep(1);
     setReferenceCode(null);
+    mutation.reset();
     reset();
   };
 
   const handleNextStep = async () => {
-    const valid = await trigger(["fullName", "nationalId", "phone"]);
-    if (valid) setStep(2);
+    try {
+      const valid = await trigger(["fullName", "nationalId", "phone"]);
+      if (valid) setStep(2);
+    } catch {
+      // Handled by formState.errors
+    }
   };
 
   const onSubmit = (values: FormValues) => {
+    if (mutation.isPending) return;
     mutation.mutate(values);
   };
 
@@ -120,6 +145,16 @@ export function BnplCreditModal() {
               2. {t.bnpl.step2Title}
             </span>
           </div>
+
+          {mutation.isError && (
+            <div
+              role="alert"
+              className="flex items-center gap-2 rounded-xl border border-rose-500/40 bg-rose-500/10 p-3 text-xs text-rose-600 dark:text-rose-300"
+            >
+              <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>{t.bnpl.submitError}</span>
+            </div>
+          )}
 
           {step === 1 ? (
             <div className="space-y-3">
